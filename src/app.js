@@ -2,20 +2,21 @@ import express from "express";
 import cors from "cors";
 import usuarioRoutes from "./routes/usuarioRoutes.js";
 import tarefaRoutes from "./routes/tarefaRoutes.js";
+import swaggerDocs from "./swagger.js";
 
 const app = express();
-const port = 8000;
+const PORT = process.env.PORT || 8000;
 
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
 
-app.get("/", (req, res) => {
-    res.send("Olá mundo!");
-});
-
+// Rotas
 app.use("/usuarios", usuarioRoutes);
 app.use("/tarefas", tarefaRoutes);
 
-app.listen(port, () => {
-    console.log(`🦠 Servidor rodando: http://localhost:${port}`);
+// Documentação Swagger
+swaggerDocs(app);
+
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor rodando na porta ${PORT}`);
 });
